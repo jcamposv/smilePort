@@ -1,0 +1,24 @@
+---
+interface Props {
+  line1: string;
+  accent: string;
+  line2: string;
+  align?: "left" | "center";
+  class?: string;
+}
+
+const { line1, accent, line2, align = "center", class: className } = Astro.props;
+const alignment = align === "center" ? "text-center" : "text-left";
+---
+
+<h2
+  class:list={[
+    "text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight",
+    alignment,
+    className,
+  ]}
+>
+  {line1}{" "}
+  <em class="accent-font font-normal not-italic text-primary">{accent}</em>{" "}
+  {line2}
+</h2>

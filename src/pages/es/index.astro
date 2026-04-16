@@ -1,0 +1,28 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/layout/Header.astro";
+import Footer from "../../components/layout/Footer.astro";
+import HeroSection from "../../components/sections/HeroSection.astro";
+import ServicesSection from "../../components/sections/ServicesSection.astro";
+import WhyBogotaSection from "../../components/sections/WhyBogotaSection.astro";
+import ProcessSection from "../../components/sections/ProcessSection.astro";
+import TeamSection from "../../components/sections/TeamSection.astro";
+import TestimonialsSection from "../../components/sections/TestimonialsSection.astro";
+import CTASection from "../../components/sections/CTASection.astro";
+
+import * as es from "../../data/site-es";
+---
+
+<BaseLayout title={es.siteConfig.title} description={es.siteConfig.description}>
+  <Header lang="es" />
+  <main>
+    <HeroSection lang="es" />
+    <ServicesSection lang="es" />
+    <WhyBogotaSection lang="es" />
+    <ProcessSection lang="es" />
+    <TeamSection lang="es" />
+    <TestimonialsSection lang="es" />
+    <CTASection lang="es" />
+  </main>
+  <Footer lang="es" />
+</BaseLayout>

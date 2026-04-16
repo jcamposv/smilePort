@@ -1,0 +1,34 @@
+---
+import { getData, type Lang } from "../../data/i18n";
+
+interface Props { lang?: Lang; }
+const { lang = "en" } = Astro.props;
+const { process } = getData(lang);
+---
+
+<section class="py-20 lg:py-28 bg-navy text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto text-center mb-16 lg:mb-24">
+      <span class="inline-flex items-center gap-2 bg-teal/20 text-teal-light text-sm font-semibold px-4 py-1.5 rounded-full mb-5">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+        {lang === "en" ? "Simple 4-Step Process" : "Proceso Simple en 4 Pasos"}
+      </span>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
+        {lang === "en" ? "How It Works" : "Cómo Funciona"}
+      </h2>
+      <p class="mt-5 text-white/50 text-lg font-body max-w-2xl mx-auto">{lang === "en" ? "From your first message to your new smile — we handle everything so you can focus on enjoying Bogotá." : "Desde tu primer mensaje hasta tu nueva sonrisa — nos encargamos de todo para que puedas disfrutar de Bogotá."}</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      {process.map((item) => (
+        <div class="text-center lg:text-left">
+          <div class="w-16 h-16 mx-auto lg:mx-0 bg-teal/20 rounded-2xl flex items-center justify-center mb-5">
+            <span class="font-extrabold text-xl text-teal">{item.step}</span>
+          </div>
+          <h3 class="font-bold text-lg mb-2">{item.title}</h3>
+          <p class="text-white/50 text-sm leading-relaxed font-body">{item.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

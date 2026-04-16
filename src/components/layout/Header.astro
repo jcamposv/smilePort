@@ -1,0 +1,58 @@
+---
+import { getData, type Lang } from "../../data/i18n";
+import MobileMenu from "./MobileMenu";
+
+interface Props { lang?: Lang; }
+const { lang = "en" } = Astro.props;
+const { navigation, siteConfig } = getData(lang);
+const switchLang = lang === "en" ? "/es" : "/";
+const switchLabel = lang === "en" ? "ES" : "EN";
+const ctaLabel = lang === "en" ? "Get Free Quote" : "Cotización Gratis";
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 header-bar" id="top">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16 lg:h-20">
+      <a href={lang === "en" ? "/" : "/es"} class="flex items-center gap-2 shrink-0 relative z-50">
+        <img src="/logo.png" alt={siteConfig.name} class="h-12 lg:h-14" />
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-8" aria-label="Main navigation">
+        {navigation.map((item) => (
+          <a href={item.href} class="text-sm font-medium text-navy/60 hover:text-primary transition-colors duration-200">{item.label}</a>
+        ))}
+      </nav>
+
+      <div class="hidden lg:flex items-center gap-3">
+        <!-- Language toggle -->
+        <a
+          href={switchLang}
+          class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy/50 hover:text-primary border border-navy/15 rounded-full px-3.5 py-1.5 transition-colors"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418"/></svg>
+          {switchLabel}
+        </a>
+
+        <button data-booking class="inline-flex items-center justify-center bg-teal text-white font-semibold rounded-full px-6 py-2.5 text-sm hover:bg-teal-dark transition-all duration-300 cursor-pointer shadow-lg shadow-teal/20">
+          {ctaLabel}
+        </button>
+      </div>
+
+      <MobileMenu client:load lang={lang} />
+    </div>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector("header");
+  window.addEventListener("scroll", () => {
+    if (!header) return;
+    if (window.scrollY > 80) { header.classList.add("header-scrolled"); }
+    else { header.classList.remove("header-scrolled"); }
+  });
+</script>
+
+<style>
+  .header-bar { background-color: white; transition: box-shadow 0.4s; border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .header-bar:global(.header-scrolled) { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+</style>

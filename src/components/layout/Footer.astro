@@ -1,0 +1,41 @@
+---
+import { getData, type Lang } from "../../data/i18n";
+
+interface Props { lang?: Lang; }
+const { lang = "en" } = Astro.props;
+const { siteConfig, navigation, footer } = getData(lang);
+---
+
+<footer class="bg-navy text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+      <div class="lg:col-span-1">
+        <img src="/logo.png" alt={siteConfig.name} class="h-14 mb-4 brightness-0 invert" />
+        <p class="text-white/50 text-sm leading-relaxed max-w-xs">Premium dental tourism in Bogotá, Colombia. World-class care at a fraction of US prices.</p>
+        <div class="flex gap-4 mt-6">
+          {footer.socials.map((s) => (<a href={s.href} class="text-white/40 hover:text-teal transition-colors text-sm">{s.label}</a>))}
+        </div>
+      </div>
+      <div>
+        <h3 class="font-semibold text-sm uppercase tracking-wider text-white/40 mb-4">{lang === "en" ? "Navigation" : "Navegación"}</h3>
+        <ul class="space-y-3">{navigation.map((item) => (<li><a href={item.href} class="text-white/60 hover:text-teal transition-colors text-sm">{item.label}</a></li>))}</ul>
+      </div>
+      <div>
+        <h3 class="font-semibold text-sm uppercase tracking-wider text-white/40 mb-4">{lang === "en" ? "Treatments" : "Tratamientos"}</h3>
+        <ul class="space-y-3">{footer.services.map((s) => (<li><a href={lang === "en" ? "#services" : "#servicios"} class="text-white/60 hover:text-teal transition-colors text-sm">{s}</a></li>))}</ul>
+      </div>
+      <div>
+        <h3 class="font-semibold text-sm uppercase tracking-wider text-white/40 mb-4">{lang === "en" ? "Contact" : "Contacto"}</h3>
+        <address class="not-italic space-y-3 text-sm text-white/60">
+          <p class="whitespace-pre-line">{footer.contact.address}</p>
+          <p><a href={`tel:${footer.contact.phone.replace(/\D/g, "")}`} class="hover:text-teal transition-colors">{footer.contact.phone}</a></p>
+          <p><a href={`mailto:${footer.contact.email}`} class="hover:text-teal transition-colors">{footer.contact.email}</a></p>
+          <p class="text-white/40">{footer.hours}</p>
+        </address>
+      </div>
+    </div>
+    <div class="mt-16 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-white/30 text-sm">&copy; {new Date().getFullYear()} {siteConfig.name} {siteConfig.tagline}. {lang === "en" ? "All rights reserved." : "Todos los derechos reservados."}</p>
+    </div>
+  </div>
+</footer>
